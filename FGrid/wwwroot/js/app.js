@@ -7,6 +7,7 @@ $(document).ready(function () {
 
     $(".dataTable thead tr th").each(function () {
         let columnName = $(this).text().replace(/\s/g, '');
+        // let columnName = $(this).text().replace(`"`, '');
         if (columnName !== undefined && columnName !== "") {
             columnName = columnName[0].toLowerCase() + columnName.substring(1, columnName.length);
 
@@ -19,23 +20,27 @@ $(document).ready(function () {
             }
 
             columns.push({data: columnName});
+
         }
     });
 
     $('.dataTable thead tr').clone(true).appendTo('.dataTable thead');
-    $('.dataTable thead tr:eq(1) th').not('.not-searchable').each(function (i) {
-        var title = $(this).text();
-        // placeholder="Search '+title.replace(/\s/g, '')+'" /
-        $(this).html('<input type="text" class="form-control form-control-sm">');
+    $('.dataTable thead tr:eq(1) th').each(function (i) {
+        if ($(this).hasClass("not-searchable")) {
+            $(this).html("");
+        } else {
+            var title = $(this).text();
+            $(this).html('<input type="text" class="form-control form-control-sm">');
 
-        $('input', this).on('keyup change', function () {
-            if (table.column(i).search() !== this.value) {
-                table
-                    .column(i)
-                    .search(this.value)
-                    .draw();
-            }
-        });
+            $('input', this).on('keyup change', function () {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        }
     });
 
     table = $(".dataTable").DataTable({
@@ -80,13 +85,13 @@ $(document).ready(function () {
                 }
             },
             {targets: "date-type", type: "date-eu"},
-            {
-                targets: 10,
-                data: null,
-                defaultContent: "<a class='btn btn-link' role='button' href='#' onclick='edit(this)'>Edit</a>",
-                orderable: false,
-                searchable: false
-            },
+            // {
+            //     targets: 10,
+            //     data: null,
+            //     defaultContent: "<a class='btn btn-link' role='button' href='#' onclick='edit(this)'>Edit</a>",
+            //     orderable: false,
+            //     searchable: false
+            // },
         ]
     });
 });

@@ -13,11 +13,12 @@ namespace FGrid.Extensions
     {
         public static IHtmlContent FGrid(this IHtmlHelper htmlHelper, List<FGridColumn> columns)
         {
-            var table = new TagBuilder("table");
-            table.AddCssClass("dataTable table table-bordered");
-            
             var outerDiv = new TagBuilder("div");
             outerDiv.AddCssClass("dataTables_wrapper");
+            
+            var table = new TagBuilder("table");
+            table.AddCssClass("dataTable table table-bordered");
+
             outerDiv.InnerHtml.AppendHtml(table);
             
             var thead = new TagBuilder("thead");
@@ -43,7 +44,7 @@ namespace FGrid.Extensions
             string result;
             using (var sw = new System.IO.StringWriter())
             {
-                table.WriteTo(sw, System.Text.Encodings.Web.HtmlEncoder.Default);
+                outerDiv.WriteTo(sw, System.Text.Encodings.Web.HtmlEncoder.Default);
                 result = sw.ToString();
             }
 
