@@ -1,0 +1,31 @@
+﻿@page
+@using System.Collections
+@using FGrid.Extensions
+@using FGrid.Persistence.Models
+@using FGridColumn = FGrid.Models.FGridColumn
+@model FGrid.Pages.Users.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            @Html.FGrid(new List<FGridColumn>()
+            {
+                new FGridColumn() {Name = nameof(TestUser.Id), IsSearchable = true, IsOrderable = true},
+                new FGridColumn() {Name = nameof(TestUser.Name), IsSearchable = true, IsOrderable = true},
+                new FGridColumn() {Name = nameof(TestUser.Lastname), IsSearchable = true, IsOrderable = true},
+                new FGridColumn() {Name = nameof(TestUser.Age), IsSearchable = true, IsOrderable = true},
+                new FGridColumn() {Name = nameof(TestUser.Gender)},
+                new FGridColumn() {Name = "Address.Country", IsSearchable = true, IsOrderable = true},
+                new FGridColumn() {Name = "Address.Street", IsSearchable = true, IsOrderable = true},
+                new FGridColumn() {Name = "Address.ZipCode", IsSearchable = true, IsOrderable = true},
+                new FGridColumn() {Name = nameof(TestUser.Notes), IsSearchable = true, IsOrderable = true},
+                new FGridColumn() {Name = nameof(TestUser.Phone), IsSearchable = true, IsOrderable = true},
+                new FGridColumn() {Name = ""}
+            })
+        </div>
+    </div>
+</div>
