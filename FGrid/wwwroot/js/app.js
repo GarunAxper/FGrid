@@ -5,9 +5,8 @@ $(document).ready(function () {
     $.fn.dataTable.moment("DD/MM/YYYY");
     let columns = [];
 
-    $(".dataTable thead tr th").each(function () {
+    $(".dataTable thead tr:eq(0) th").each(function () {
         let columnName = $(this).text().replace(/\s/g, '');
-        // let columnName = $(this).text().replace(`"`, '');
         if (columnName !== undefined && columnName !== "") {
             columnName = columnName[0].toLowerCase() + columnName.substring(1, columnName.length);
 
@@ -20,19 +19,18 @@ $(document).ready(function () {
             }
 
             columns.push({data: columnName});
-
         }
     });
 
-    $('.dataTable thead tr').clone(true).appendTo('.dataTable thead');
+    //$('.dataTable thead tr').clone(true).appendTo('.dataTable thead');
     $('.dataTable thead tr:eq(1) th').each(function (i) {
-        var title = $(this).text();
-        $(this).empty();
+        // var title = $(this).text();
+        // $(this).empty();
         if (!$(this).hasClass("not-searchable")) {
             // placeholder="${title}"
-            $(this).html(`<input type="text" class="form-control form-control-sm" >`);
+            //$(this).html(`<input type="text" class="form-control form-control-sm" >`);
 
-            $('input', this).on('keyup change', function () {
+            $('input, select', this).on('keyup change', function () {
                 if (table.column(i).search() !== this.value) {
                     table
                         .column(i)
@@ -95,6 +93,24 @@ $(document).ready(function () {
             // },
         ]
     });
+    $(".dataTables_filter").append(`
+        <div class="row">
+            <div class="col-12">
+                <button id="reset-filters" class="btn btn-secondary btn-sm" >
+                    <span>
+                        <span>Reset</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    `);
+
+    $("#reset-filters").click(function () {
+        table.search('').columns().search('').draw();
+        $('.dataTable thead tr:eq(1) th').find('select, input').each(function () {
+            $(this).val("");
+        })
+    })
 });
 
 function strtrunc(str, num) {

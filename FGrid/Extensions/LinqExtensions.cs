@@ -11,22 +11,22 @@ namespace FGrid.Extensions
     public static class LinqExtensions
     {
         public static async Task<FGridResult<T>> ApplyFGridFilters<T>(this IQueryable<T> sourceList,
-            FGridParameters dtParameters)
+            FGridModel dtModel)
         {
             // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
             var totalResultsCount = await sourceList.CountAsync();
 
-            var searchBy = dtParameters.Search?.Value;
+            var searchBy = dtModel.Search?.Value;
 
             // if we have an empty search then just order the results by Id ascending
             var orderCriteria = "Id";
             var orderAscendingDirection = true;
 
-            if (dtParameters.Order != null)
+            if (dtModel.Order != null)
             {
                 // in this example we just default sort on the 1st column
-                orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
-                orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                orderCriteria = dtModel.Columns[dtModel.Order[0].Column].Data;
+                orderAscendingDirection = dtModel.Order[0].Dir.ToString().ToLower() == "asc";
             }
 
             // if (!string.IsNullOrEmpty(searchBy))
@@ -38,7 +38,7 @@ namespace FGrid.Extensions
             //                                        r.Notes.ToUpper().Contains(searchBy.ToUpper()));
             // }
 
-            foreach (var column in dtParameters.Columns)
+            foreach (var column in dtModel.Columns)
             {
                 if (column.Searchable && !string.IsNullOrEmpty(column.Search.Value))
                 {
@@ -54,12 +54,12 @@ namespace FGrid.Extensions
 
             return new FGridResult<T>
             {
-                Draw = dtParameters.Draw,
+                Draw = dtModel.Draw,
                 RecordsTotal = totalResultsCount,
                 RecordsFiltered = filteredResultsCount,
                 Data = await sourceList
-                    .Skip(dtParameters.Start)
-                    .Take(dtParameters.Length)
+                    .Skip(dtModel.Start)
+                    .Take(dtModel.Length)
                     .ToListAsync()
             };
         }

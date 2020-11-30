@@ -20,10 +20,10 @@ namespace FGrid.Controllers
         }
         
         [HttpPost]
-        public async Task<JsonResult> GetUsers(FGridParameters dtParameters)
+        public async Task<JsonResult> GetUsers(FGridModel dtModel)
         {
             var users = _dbContext.Users.AsQueryable();
-            var result = await users.ApplyFGridFilters(dtParameters);
+            var result = await users.ApplyFGridFilters(dtModel);
             
             return Json(result);
         }

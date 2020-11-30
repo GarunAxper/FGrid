@@ -84,7 +84,7 @@ namespace FGrid.Persistence.Models
     /// <summary>
     /// The parameters sent by jQuery DataTables in AJAX queries.
     /// </summary>
-    public class FGridParameters
+    public class FGridModel
     {
         /// <summary>
         /// Draw counter.

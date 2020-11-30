@@ -25,19 +25,19 @@ namespace FGrid.Pages.Users
             Users = _dbContext.Users.ToList();
         }
 
-        public async Task<JsonResult> OnPostGetUsers([FromBody]FGridParameters dtParameters)
+        public async Task<JsonResult> OnPostGetUsers([FromBody]FGridModel dtModel)
         {
-            var searchBy = dtParameters.Search?.Value;
+            var searchBy = dtModel.Search?.Value;
 
             // if we have an empty search then just order the results by Id ascending
             var orderCriteria = "Id";
             var orderAscendingDirection = true;
 
-            if (dtParameters.Order != null)
+            if (dtModel.Order != null)
             {
                 // in this example we just default sort on the 1st column
-                orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
-                orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+                orderCriteria = dtModel.Columns[dtModel.Order[0].Column].Data;
+                orderAscendingDirection = dtModel.Order[0].Dir.ToString().ToLower() == "asc";
             }
 
             var result = _dbContext.Users.AsQueryable();
@@ -64,7 +64,7 @@ namespace FGrid.Pages.Users
             //
             // result = result.Where(predicate);
 
-            foreach (var column in dtParameters.Columns)
+            foreach (var column in dtModel.Columns)
             {
                 if (column.Searchable && !string.IsNullOrEmpty(column.Search.Value))
                 {
@@ -82,12 +82,12 @@ namespace FGrid.Pages.Users
             
             return new JsonResult(new FGridResult<TestUser>
             {
-                Draw = dtParameters.Draw,
+                Draw = dtModel.Draw,
                 RecordsTotal = totalResultsCount,
                 RecordsFiltered = filteredResultsCount,
                 Data = await result
-                    .Skip(dtParameters.Start)
-                    .Take(dtParameters.Length)
+                    .Skip(dtModel.Start)
+                    .Take(dtModel.Length)
                     .ToListAsync()
             });
         }

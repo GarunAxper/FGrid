@@ -17,7 +17,7 @@
                 new FGridColumn() {Name = nameof(TestUser.Name), IsSearchable = true, IsOrderable = true},
                 new FGridColumn() {Name = nameof(TestUser.Lastname), IsSearchable = true, IsOrderable = true},
                 new FGridColumn() {Name = nameof(TestUser.Age), IsSearchable = true, IsOrderable = true},
-                new FGridColumn() {Name = nameof(TestUser.Gender)},
+                new FGridColumn() {Name = nameof(TestUser.Gender), IsSearchable = true, FilterOptions = new[] {"0", "1", "2"}},
                 new FGridColumn() {Name = "Address.Country", IsSearchable = true, IsOrderable = true},
                 new FGridColumn() {Name = "Address.Street", IsSearchable = true, IsOrderable = true},
                 new FGridColumn() {Name = "Address.ZipCode", IsSearchable = true, IsOrderable = true},
