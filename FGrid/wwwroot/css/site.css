@@ -81,3 +81,14 @@ body {
   background: #4d4d4f;
   border-radius: 10px;
 }
+
+::-webkit-scrollbar-thumb:vertical {
+  background: #4d4d4f;
+  border-radius: 10px;
+}
+
+/*.dataTable .form-control::-webkit-input-placeholder {*/
+/*  color: black;*/
+/*  font-weight: 400;*/
+/*  font-size: 1rem;*/
+/*}*/

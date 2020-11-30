@@ -26,11 +26,11 @@ $(document).ready(function () {
 
     $('.dataTable thead tr').clone(true).appendTo('.dataTable thead');
     $('.dataTable thead tr:eq(1) th').each(function (i) {
-        if ($(this).hasClass("not-searchable")) {
-            $(this).html("");
-        } else {
-            var title = $(this).text();
-            $(this).html('<input type="text" class="form-control form-control-sm">');
+        var title = $(this).text();
+        $(this).empty();
+        if (!$(this).hasClass("not-searchable")) {
+            // placeholder="${title}"
+            $(this).html(`<input type="text" class="form-control form-control-sm" >`);
 
             $('input', this).on('keyup change', function () {
                 if (table.column(i).search() !== this.value) {
@@ -50,6 +50,7 @@ $(document).ready(function () {
         fixedHeader: true,
 
         scrollX: true,
+        scrollY: '100vh',
         autoWidth: true,
         // ServerSide Setups
         processing: true,
