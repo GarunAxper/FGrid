@@ -6,7 +6,7 @@ $(document).ready(function () {
     let columns = [];
 
     $(".dataTable thead tr:eq(0) th").each(function () {
-        let columnName = $(this).text().replace(/\s/g, '');
+        let columnName = $(this).attr("data-name").replace(/\s/g, '');
         if (columnName !== undefined && columnName !== "") {
             columnName = columnName[0].toLowerCase() + columnName.substring(1, columnName.length);
 
@@ -59,7 +59,7 @@ $(document).ready(function () {
         searching: {regex: true},
         // Ajax Filter
         ajax: {
-            url: "Api/Users/GetUsers",
+            url: $(".dataTable").attr("data-url"),
             type: "POST",
             contentType: "application/json",
             dataType: "json",

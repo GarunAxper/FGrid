@@ -96,7 +96,7 @@ namespace FGrid.Persistence.Models
         /// <summary>
         /// An array defining all columns in the table.
         /// </summary>
-        public FGridColumn[] Columns { get; set; }
+        public FGridHtmlColumn[] Columns { get; set; }
 
         /// <summary>
         /// An array defining how many columns are being ordering upon - i.e. if the array length is 1, then a single column sort is being performed, otherwise a multi-column sort is being performed.
@@ -139,7 +139,7 @@ namespace FGrid.Persistence.Models
     /// <summary>
     /// A jQuery DataTables column.
     /// </summary>
-    public class FGridColumn
+    public class FGridHtmlColumn
     {
         /// <summary>
         /// Column's data source, as defined by columns.data.

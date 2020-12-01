@@ -1,8 +1,7 @@
 ﻿@page
-@using System.Collections
 @using FGrid.Extensions
+@using FGrid.Models
 @using FGrid.Persistence.Models
-@using FGridColumn = FGrid.Models.FGridColumn
 @model FGrid.Pages.Users.IndexModel
 
 @{
@@ -12,18 +11,23 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            @Html.FGrid(new List<FGridColumn>()
+            @(Html.FGrid<TestUser>("Api/Users/GetUsers").Build(columns =>
             {
-                new FGridColumn() {Name = nameof(TestUser.Name), IsSearchable = true, IsOrderable = true},
-                new FGridColumn() {Name = nameof(TestUser.Lastname), IsSearchable = true, IsOrderable = true},
-                new FGridColumn() {Name = nameof(TestUser.Age), IsSearchable = true, IsOrderable = true},
-                new FGridColumn() {Name = nameof(TestUser.Gender), IsSearchable = true, FilterOptions = new[] {"0", "1", "2"}},
-                new FGridColumn() {Name = "Address.Country", IsSearchable = true, IsOrderable = true},
-                new FGridColumn() {Name = "Address.Street", IsSearchable = true, IsOrderable = true},
-                new FGridColumn() {Name = "Address.ZipCode", IsSearchable = true, IsOrderable = true},
-                new FGridColumn() {Name = nameof(TestUser.Notes), IsSearchable = true, IsOrderable = true},
-                new FGridColumn() {Name = nameof(TestUser.Phone), IsSearchable = true, IsOrderable = true},
-            })
+                columns.Add(user => user.Name).Searchable(true).Orderable(true);
+                columns.Add(user => user.Lastname).Searchable(true).Orderable(true);
+                columns.Add(user => user.Age).Searchable(true).Orderable(true);
+                columns.Add(user => user.Gender).Searchable(true).Orderable(true).SetFilterOptions(new List<FGridFilterOption>
+                {
+                    new FGridFilterOption("0", Enum.GetName(typeof(Gender), Gender.NotSet)), 
+                    new FGridFilterOption("1", Enum.GetName(typeof(Gender), Gender.Male)), 
+                    new FGridFilterOption("2", Enum.GetName(typeof(Gender), Gender.Female))
+                });
+                columns.Add(user => user.Address.Country).Searchable(true).Orderable(true).SetDisplayName("Country");
+                columns.Add(user => user.Address.Street).Searchable(true).Orderable(true).SetDisplayName("Street");
+                columns.Add(user => user.Address.ZipCode).Searchable(true).Orderable(true).SetDisplayName("ZipCode");
+                columns.Add(user => user.Notes).Searchable(true).Orderable(true);
+                columns.Add(user => user.Phone).Searchable(true).Orderable(true);
+            }))
         </div>
     </div>
 </div>
