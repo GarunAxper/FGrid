@@ -26,6 +26,11 @@ namespace FGrid.Models
             Name = NameFor(expression);
         }
 
+        public FGridColumn()
+        {
+            
+        }
+
         private static string NameFor(Expression<Func<T, TValue>> expression)
         {
             var text = expression.Body is MemberExpression member ? member.ToString() : "";

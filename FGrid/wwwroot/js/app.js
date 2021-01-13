@@ -19,9 +19,11 @@ $(document).ready(function () {
             }
 
             columns.push({data: columnName});
+        } else {
+            columns.push({data: null, defaultContent: "<div></div>"});
         }
     });
-
+    console.log(columns);
     //$('.dataTable thead tr').clone(true).appendTo('.dataTable thead');
     $('.dataTable thead tr:eq(1) th').each(function (i) {
         // var title = $(this).text();
@@ -71,6 +73,7 @@ $(document).ready(function () {
         columns: columns,
         // Column Definitions
         columnDefs: [
+
             {targets: "not-orderable", orderable: false},
             {targets: "not-searchable", searchable: false},
             {

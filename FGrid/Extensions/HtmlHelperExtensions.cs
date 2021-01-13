@@ -116,6 +116,7 @@ namespace FGrid.Extensions
                 if (!column.IsSearchable)
                 {
                     th.AddCssClass("not-searchable");
+                    filterTr.InnerHtml.AppendHtml(new TagBuilder("th"));
                 }
                 else
                 {

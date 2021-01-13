@@ -21,5 +21,13 @@ namespace FGrid.Models
 
             return column;
         }
+        
+        public FGridColumn<T, string> Add()
+        {
+            var column = new FGridColumn<T, string>();
+            Grid.Columns.Add(column);
+
+            return column;
+        } 
     }
 }
